@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Header } from './src/components/common'
 import LoginForm from './src/components/loginForm'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import reducer from './src/reducers'
 import firebase from 'firebase'
+import ReduxThunk from 'redux-thunk'
 export default class App extends React.Component {
   componentWillMount(){
     const config = {
@@ -19,8 +20,9 @@ export default class App extends React.Component {
     firebase.initializeApp(config);
   }
   render() {
+    const store = createStore(reducer, applyMiddleware(ReduxThunk))
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <View>
           <Header/>
           <LoginForm/>
