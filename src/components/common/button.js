@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     buttonStyle: {
         flex: 1,
         alignSelf: 'stretch',
-        backgroundColor: '#fff',
         borderRadius: 5,
         backgroundColor: '#007aff',
         marginLeft: 5,

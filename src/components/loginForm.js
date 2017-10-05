@@ -11,11 +11,13 @@ class LoginForm extends Component {
         this.props.passwordChanged(text)
     }
     onButtonPress = () => {
-        const { email, password, loginUser } = this.props
-        loginUser({ email, password })
+        const { email, password, loginUser, navigation } = this.props
+        loginUser({ email, password }, () => navigation.navigate(
+            'EmployeesList'
+        ))
     }
     renderButton = () => {
-        return this.props.loading 
+        return !this.props.loading 
             ?   <Button onPress={this.onButtonPress.bind(this)}>
                     Login
                 </Button>
