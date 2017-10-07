@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE, EMPLOYEES_FETCH_SUCCESS } from './types'
+import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE, EMPLOYEES_FETCH_SUCCESS, EMPLOYEE_SAVE_SUCCESS } from './types'
 
 export const employeeUpdate = ({ prop, value }) => {
     return {
@@ -26,5 +26,17 @@ export const employeesFetch = () => {
                 type: EMPLOYEES_FETCH_SUCCESS,
                 payload: snapshot.val()
             })
+        })
+}
+
+export const employeeSave = ({name, phone, shift, uid}, cb) => {
+    const { currentUser } = firebase.auth();
+    return dispatch => firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+        .set({ name, phone, shift})
+        .then(() => {
+            dispatch({
+                type: EMPLOYEE_SAVE_SUCCESS
+            })
+            cb()
         })
 }

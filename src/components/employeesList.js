@@ -5,10 +5,15 @@ import { ListView, Text } from 'react-native'
 import { Button } from './common'
 import EmployeeListItem from './employeeListItem'
 import { employeesFetch } from '../actions'
+import { Entypo } from '@expo/vector-icons'
 class EmployeesList extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerRight: <Button onPress={() => navigation.navigate('EmployForm')}> + </Button>
+            headerRight: (
+                <Button onPress={() => navigation.navigate('EmployCreate')}>
+                    <Entypo name='plus' color='white' size={20}/>
+                </Button>
+            )
         }
     }
     componentWillMount(){
@@ -24,12 +29,10 @@ class EmployeesList extends Component {
         })
         this.dataSource = ds.cloneWithRows(employees)
     }
-    renderRow = employees => {
-        console.log(employees)
-        return <EmployeeListItem name={employees.name}/>
+    renderRow = employee => {
+        return <EmployeeListItem employee={employee} navigation={this.props.navigation}/>
     }
     render(){
-        console.log(this.props.employees)
         return(
             <ListView
                 enableEmptySections

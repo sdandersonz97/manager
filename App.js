@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Button } from './src/components/common'
 import LoginForm from './src/components/loginForm'
-import EmployForm from './src/components/employForm'
+import EmployCreate from './src/components/employCreate'
+import EmployeeEdit from './src/components/employeeEdit'
 import EmployeesList from './src/components/employeesList'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -37,16 +38,28 @@ const MainNavigator = StackNavigator({
       headerStyle: {
         backgroundColor: '#007aff'
       },
-      gesturesEnabled:false
+      gesturesEnabled:false,
+      title:'Employ List'      
     }
   },
-  EmployForm: {
-    screen: EmployForm,
+  EmployCreate: {
+    screen: EmployCreate,
     navigationOptions: {
       headerTinkColor: 'white',
       headerStyle: {
         backgroundColor: '#007aff'
-      }
+      },
+      title:'Create an Employ'
+    }
+  },
+  EmployeeEdit: {
+    screen: EmployeeEdit,
+    navigationOptions: {
+      headerTinkColor: 'white',
+      headerStyle: {
+        backgroundColor: '#007aff'
+      },
+      title:'Edit an Employ'
     }
   }
 })

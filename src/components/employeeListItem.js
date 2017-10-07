@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { CardSection } from './common'
 
 class EmployeeListItem extends Component {
+    onRowPress() {
+        console.log('press')
+        const { navigation, employee } = this.props
+        navigation.navigate('EmployeeEdit', { employee })
+    }
     render(){
-        const { name } = this.props
+        const { employee } = this.props
         return (
-            <CardSection>
-                <Text style={styles.titleStyle}> { name } </Text>
-            </CardSection>
+            <TouchableOpacity onPress={()=>this.onRowPress()}>
+                <CardSection>
+                    <Text style={styles.titleStyle}> { employee.name } </Text>
+                </CardSection>
+            </TouchableOpacity>
         )
     }
 }

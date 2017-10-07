@@ -2,15 +2,9 @@ import React, { Component }  from 'react'
 import { connect } from 'react-redux'
 import { Picker, StyleSheet, Text } from 'react-native'
 import { Card, CardSection, Input, Button } from './common'
-import { employeeUpdate, employeeCreate } from '../actions'
+import { employeeUpdate } from '../actions'
 class EmployForm extends Component {
-    onButtonPress = () => {
-        const { name, phone, shift, employeeCreate, navigation } = this.props
-        employeeCreate(
-            {name, phone, shift: shift || 'Monday'}, 
-            () => navigation.goBack()
-        )
-    }
+    
     render() {
         const { employeeUpdate, name, phone, shift } = this.props
         return(
@@ -27,7 +21,7 @@ class EmployForm extends Component {
                     <Input 
                         label="Phone" 
                         placeholder="555-555-555"
-                        values={phone}
+                        value={phone}
                         onChangeText={value => employeeUpdate({prop: 'phone', value})}
                     />
                 </CardSection>
@@ -46,9 +40,6 @@ class EmployForm extends Component {
                         <Picker.Item label="Sunday" value="Sunday" />
                     </Picker>
                 </CardSection>
-                <CardSection>
-                    <Button onPress={this.onButtonPress.bind(this)}>Create</Button>
-                </CardSection>
             </Card>
         )
     }
@@ -59,8 +50,4 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     }
 })
-const mapStateToProps = state => {
-    const { name, phone, shift } = state.employForm
-    return { name, phone, shift }
-}
-export default connect(mapStateToProps, { employeeUpdate, employeeCreate })(EmployForm)
+export default connect(null, { employeeUpdate })(EmployForm)
