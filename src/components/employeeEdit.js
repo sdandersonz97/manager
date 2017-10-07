@@ -3,9 +3,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EmployForm from './employForm'
 import Communications from 'react-native-communications'
-import { Button, Card, CardSection } from './common'
+import { Button, Card, CardSection, Confirm } from './common'
 import { employeeUpdate, employeeSave } from '../actions'
 class EmployeeEdit extends Component {
+    state = {
+        visible: false
+    }
     componentWillMount(){
         _.forEach(this.props.navigation.state.params.employee, (value, prop) => {
             this.props.employeeUpdate({prop, value})
@@ -19,8 +22,13 @@ class EmployeeEdit extends Component {
         const { phone, shift } = this.props
         Communications.text(phone, `Your upcoming shift is on ${shift}`)
     }
+    onFirePress = () => {
+        this.setState({
+            visible: !this.state.visible
+        })
+    }
     render(){
-        console.log(this.props)
+        const { visible } = this.state
         return (
             <Card>
                 <EmployForm {...this.props}/>
@@ -35,6 +43,16 @@ class EmployeeEdit extends Component {
                         Text Schedule
                     </Button>
                 </CardSection>
+                <CardSection>
+                    <Button onPress={this.onFirePress.bind(this)}>
+                        Fire Employee
+                    </Button>
+                </CardSection>
+                <Confirm
+                    visible={visible}
+                >
+                    Are you sure you want to delete this?
+                </Confirm>
             </Card>
         )
     }
