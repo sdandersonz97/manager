@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import EmployForm from './employForm'
 import Communications from 'react-native-communications'
 import { Button, Card, CardSection, Confirm } from './common'
-import { employeeUpdate, employeeSave } from '../actions'
+import { employeeUpdate, employeeSave, employeeDelete } from '../actions'
 class EmployeeEdit extends Component {
     state = {
         visible: false
@@ -25,6 +25,15 @@ class EmployeeEdit extends Component {
     onFirePress = () => {
         this.setState({
             visible: !this.state.visible
+        })
+    }
+    onAccept = () => {
+        const { navigation, employeeDelete } = this.props 
+        employeeDelete({uid: navigation.state.params.employee.uid}, () => navigation.goBack())
+    }
+    onDecline = () =>  {
+        this.setState({
+            visible: false
         })
     }
     render(){
@@ -50,6 +59,8 @@ class EmployeeEdit extends Component {
                 </CardSection>
                 <Confirm
                     visible={visible}
+                    onAccept={this.onAccept.bind(this)}
+                    onDecline={this.onDecline.bind(this)}
                 >
                     Are you sure you want to delete this?
                 </Confirm>
@@ -61,4 +72,4 @@ const mapStateToProps = state => {
     const { name, phone, shift } = state.employForm
     return { name, phone, shift }
 }
-export default connect(mapStateToProps,{ employeeUpdate, employeeSave })(EmployeeEdit)
+export default connect(mapStateToProps,{ employeeUpdate, employeeSave, employeeDelete })(EmployeeEdit)
